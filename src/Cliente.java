@@ -1,25 +1,20 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
-import java.awt.Window.Type;
 
 public class Cliente extends JFrame 
 {
@@ -63,7 +58,7 @@ public class Cliente extends JFrame
       displayArea = new JTextArea();
       getContentPane().add( new JScrollPane( displayArea ), BorderLayout.CENTER );
 
-      setSize( 361, 424 );
+      setSize( 360, 263 );
       setVisible( true );
    } 
 
@@ -156,10 +151,10 @@ public class Cliente extends JFrame
    {
       try
       {
-         output.writeObject( telaCliente.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+         output.writeObject( telaCliente.textField.getText() + " (Hora: " + pegarHoraMensagem() 
         		 + ") " + ">>> " + message );
          output.flush();
-         displayMessage( "\n" + telaCliente.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+         displayMessage( "\n" + telaCliente.textField.getText() + " (Hora: " + pegarHoraMensagem() 
         		 + ") " + ">>> " + message );
       } 
       catch ( IOException ioException )

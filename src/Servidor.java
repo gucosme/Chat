@@ -8,9 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JFrame;
@@ -59,7 +56,7 @@ public class Servidor extends JFrame
       displayArea = new JTextArea();
       add( new JScrollPane( displayArea ), BorderLayout.CENTER );
 
-      setSize( 361, 424 );
+      setSize( 360, 263 );
       setVisible( true );
    }
 
@@ -163,10 +160,10 @@ public class Servidor extends JFrame
    {
       try 
       {
-         output.writeObject( telaServidor.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+         output.writeObject( telaServidor.textField.getText() + " (Hora: " + pegarHoraMensagem() 
         		 + ") " + ">>> " + message );
          output.flush();
-         displayMessage( "\n" + telaServidor.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+         displayMessage( "\n" + telaServidor.textField.getText() + " (Hora: " + pegarHoraMensagem() 
         		 + ") " +  ">>> " + message );
       } 
       catch ( IOException ioException ) 
