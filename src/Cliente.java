@@ -5,16 +5,21 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import java.awt.Window.Type;
 
 public class Cliente extends JFrame 
 {
+   
+   private static final long serialVersionUID = 1L;
    private JTextField enterField; 
    private JTextArea displayArea; 
    private ObjectOutputStream output; 
@@ -25,7 +30,7 @@ public class Cliente extends JFrame
 
    public Cliente( String host )
    {
-      super( "Client" );
+      super( "Cliente" );
 
       chatServer = host; 
 
@@ -38,16 +43,17 @@ public class Cliente extends JFrame
             {
                sendData( event.getActionCommand() );
                enterField.setText( "" );
+               enterField.setBackground(Color.cyan);
             } 
          } 
       ); 
 
-      add( enterField, BorderLayout.NORTH );
+      getContentPane().add( enterField, BorderLayout.NORTH );
 
       displayArea = new JTextArea();
-      add( new JScrollPane( displayArea ), BorderLayout.CENTER );
+      getContentPane().add( new JScrollPane( displayArea ), BorderLayout.CENTER );
 
-      setSize( 300, 150 );
+      setSize( 361, 424 );
       setVisible( true );
    } 
 

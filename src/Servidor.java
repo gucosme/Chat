@@ -5,8 +5,10 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -15,6 +17,8 @@ import javax.swing.SwingUtilities;
 
 public class Servidor extends JFrame 
 {
+   
+   private static final long serialVersionUID = 1L;
    private JTextField enterField;
    private JTextArea displayArea;
    private ObjectOutputStream output;
@@ -25,7 +29,7 @@ public class Servidor extends JFrame
 
    public Servidor()
    {
-      super( "Server" );
+      super( "Servidor" );
 
       enterField = new JTextField();
       enterField.setEditable( false );
@@ -36,6 +40,7 @@ public class Servidor extends JFrame
             {
                sendData( event.getActionCommand() );
                enterField.setText( "" );
+               enterField.setBackground(Color.cyan);
             }
          }
       );
@@ -45,7 +50,7 @@ public class Servidor extends JFrame
       displayArea = new JTextArea();
       add( new JScrollPane( displayArea ), BorderLayout.CENTER );
 
-      setSize( 300, 150 );
+      setSize( 361, 424 );
       setVisible( true );
    }
 
