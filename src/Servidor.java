@@ -1,16 +1,19 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -32,7 +35,7 @@ public class Servidor extends JFrame
    public Servidor()
    {
 	  super("Chat Servidor");	  
-	  
+	  	  
 	  telaServidor.setVisible(true);
 	  telaServidor.setAlwaysOnTop(true);
 	  telaServidor.setLocationRelativeTo(null);
@@ -60,6 +63,15 @@ public class Servidor extends JFrame
       setVisible( true );
    }
 
+   public static String pegarHoraMensagem(){ 
+	   long time =  System.currentTimeMillis();  
+	   GregorianCalendar cal = new GregorianCalendar();  
+	   cal.setTimeInMillis(time); 
+	   String s = cal.getTime().toString();
+	   String[] o = s.split(" ");
+	   return o[3];
+   }
+   
    public void runServer()
    {
       try
@@ -127,7 +139,7 @@ public class Servidor extends JFrame
             displayMessage( "\nTipo de objeto recebido é desconhecido" );
          } 
 
-      } while ( !message.equals( telaServidor.textField.getText() + ">>> TERMINATE" ) );
+      } while ( !message.equals( telaServidor.textField.getText() + ">>> Terminado" ) );
    } 
 
    private void closeConnection() 
@@ -151,9 +163,11 @@ public class Servidor extends JFrame
    {
       try 
       {
-         output.writeObject( telaServidor.textField.getText() + ">>> " + message );
+         output.writeObject( telaServidor.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+        		 + ") " + ">>> " + message );
          output.flush();
-         displayMessage( "\n" + telaServidor.textField.getText() + ">>> " + message );
+         displayMessage( "\n" + telaServidor.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+        		 + ") " +  ">>> " + message );
       } 
       catch ( IOException ioException ) 
       {
@@ -168,7 +182,7 @@ public class Servidor extends JFrame
          {
             public void run() 
             {
-               displayArea.append( messageToDisplay ); 
+            	displayArea.append( messageToDisplay ); 
             }
          }
       );

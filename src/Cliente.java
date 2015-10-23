@@ -4,6 +4,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -32,9 +36,9 @@ public class Cliente extends JFrame
 
    public Cliente( String host )
    {
-      super( "Chat Cliente" );
+      super( "Chat Cliente" );      
       
-	  telaCliente.setVisible(true);
+      telaCliente.setVisible(true);
 	  telaCliente.setAlwaysOnTop(true);
 	  telaCliente.setLocationRelativeTo(null);
       
@@ -63,6 +67,15 @@ public class Cliente extends JFrame
       setVisible( true );
    } 
 
+   public static String pegarHoraMensagem(){
+	   long time =  System.currentTimeMillis();  
+	   GregorianCalendar cal = new GregorianCalendar();  
+	   cal.setTimeInMillis(time); 
+	   String s = cal.getTime().toString();
+	   String[] o = s.split(" ");
+	   return o[3];
+   }
+   
    public void runClient() 
    {
       try
@@ -119,7 +132,7 @@ public class Cliente extends JFrame
             displayMessage( "\nTipo de objeto recebido é desconhecido" );
          }
 
-      } while ( !message.equals( ">>> Terminado" ) );
+      } while ( !message.equals( telaCliente.textField.getText() + ">>> Terminado" ) );
    }
 
    private void closeConnection() 
@@ -143,9 +156,11 @@ public class Cliente extends JFrame
    {
       try
       {
-         output.writeObject( ">>> " + message );
+         output.writeObject( telaCliente.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+        		 + ") " + ">>> " + message );
          output.flush();
-         displayMessage( "\n>>> " + message );
+         displayMessage( "\n" + telaCliente.textField.getText() + "(Hora: " + pegarHoraMensagem() 
+        		 + ") " + ">>> " + message );
       } 
       catch ( IOException ioException )
       {
@@ -160,7 +175,7 @@ public class Cliente extends JFrame
          {
             public void run()
             {
-               displayArea.append( messageToDisplay );
+               displayArea.append( messageToDisplay );               
             }
          }
       );

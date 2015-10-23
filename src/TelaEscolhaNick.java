@@ -1,7 +1,10 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -58,7 +61,7 @@ public final class TelaEscolhaNick extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (textField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Informe algum nick!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				} else {
+				} else {					
 					dispose();
 				}
 			}
