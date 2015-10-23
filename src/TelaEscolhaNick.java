@@ -1,6 +1,8 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -13,14 +15,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 
-public class TelaEscolhaNick extends JFrame {
+public final class TelaEscolhaNick extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	public JTextField textField;
 	private JButton btnLogar;
 	private JButton btnCancelar;
-	public Nick n = new Nick();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,8 +58,7 @@ public class TelaEscolhaNick extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (textField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Informe algum nick!", "ERRO", JOptionPane.ERROR_MESSAGE);
-				} else {					
-					n.setNickName(textField.getText());
+				} else {
 					dispose();
 				}
 			}

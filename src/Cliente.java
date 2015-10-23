@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
 import java.awt.Window.Type;
 
 public class Cliente extends JFrame 
@@ -27,11 +28,16 @@ public class Cliente extends JFrame
    private String message = ""; 
    private String chatServer; 
    private Socket client; 
+   private TelaEscolhaNick telaCliente = new TelaEscolhaNick();
 
    public Cliente( String host )
    {
-      super( "Cliente" );
-
+      super( "Chat Cliente" );
+      
+	  telaCliente.setVisible(true);
+	  telaCliente.setAlwaysOnTop(true);
+	  telaCliente.setLocationRelativeTo(null);
+      
       chatServer = host; 
 
       enterField = new JTextField(); 
@@ -67,7 +73,7 @@ public class Cliente extends JFrame
       }
       catch ( EOFException eofException ) 
       {
-         displayMessage( "\nClient terminated connection" );
+         displayMessage( "\nConexão com Cliente terminada" );
       }
       catch ( IOException ioException ) 
       {
@@ -81,11 +87,11 @@ public class Cliente extends JFrame
 
    private void connectToServer() throws IOException
    {      
-      displayMessage( "Attempting connection\n" );
+      displayMessage( "Tentando conectar\n" );
 
       client = new Socket( InetAddress.getByName( chatServer ), 12345 );
 
-      displayMessage( "Connected to: " + 
+      displayMessage( "Conectado com: " + 
          client.getInetAddress().getHostName() );
    } 
 
@@ -95,8 +101,6 @@ public class Cliente extends JFrame
       output.flush();
 
       input = new ObjectInputStream( client.getInputStream() );
-
-      displayMessage( "\nGot I/O streams\n" );
    }
 
    private void processConnection() throws IOException
@@ -112,15 +116,15 @@ public class Cliente extends JFrame
          } 
          catch ( ClassNotFoundException classNotFoundException ) 
          {
-            displayMessage( "\nUnknown object type received" );
+            displayMessage( "\nTipo de objeto recebido é desconhecido" );
          }
 
-      } while ( !message.equals( "SERVER>>> TERMINATE" ) );
+      } while ( !message.equals( ">>> Terminado" ) );
    }
 
    private void closeConnection() 
    {
-      displayMessage( "\nClosing connection" );
+      displayMessage( "\nFechando conexão" );
       setTextFieldEditable( false );
 
       try 
@@ -139,13 +143,13 @@ public class Cliente extends JFrame
    {
       try
       {
-         output.writeObject( "CLIENT>>> " + message );
+         output.writeObject( ">>> " + message );
          output.flush();
-         displayMessage( "\nCLIENT>>> " + message );
+         displayMessage( "\n>>> " + message );
       } 
       catch ( IOException ioException )
       {
-         displayArea.append( "\nError writing object" );
+         displayArea.append( "\nErro ao escrever o objeto" );
       }
    }
 

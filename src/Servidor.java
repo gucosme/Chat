@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,14 +26,18 @@ public class Servidor extends JFrame
    private ObjectInputStream input;
    private ServerSocket server;
    private Socket connection;
-   private int counter = 1;
-   private String s = new TelaEscolhaNick().n.getNickName(); 
+   private int counter = 1; 
+   private TelaEscolhaNick telaServidor = new TelaEscolhaNick();
 
    public Servidor()
    {
-      setTitle(s);
-
-      enterField = new JTextField();
+	  super("Chat Servidor");	  
+	  
+	  telaServidor.setVisible(true);
+	  telaServidor.setAlwaysOnTop(true);
+	  telaServidor.setLocationRelativeTo(null);
+	  
+	  enterField = new JTextField();
       enterField.setEditable( false );
       enterField.addActionListener(
          new ActionListener() 
@@ -54,10 +59,6 @@ public class Servidor extends JFrame
       setSize( 361, 424 );
       setVisible( true );
    }
-   
-   public static String atribuirNick(Nick nick){
-	   return nick.getNickName();
-   }
 
    public void runServer()
    {
@@ -75,7 +76,7 @@ public class Servidor extends JFrame
             }
             catch ( EOFException eofException ) 
             {
-               displayMessage( "\nServer terminated connection" );
+               displayMessage( "\nConexão com Servidor terminada" );
             }
             finally 
             {
@@ -92,9 +93,9 @@ public class Servidor extends JFrame
 
    private void waitForConnection() throws IOException
    {
-      displayMessage( "Waiting for connection\n" );
+      displayMessage( "Aguardando por conexão\n" );
       connection = server.accept();           
-      displayMessage( "Connection " + counter + " received from: " +
+      displayMessage( "Conexão " + counter + " recebida de: " +
          connection.getInetAddress().getHostName() );
    }
 
@@ -105,12 +106,11 @@ public class Servidor extends JFrame
 
       input = new ObjectInputStream( connection.getInputStream() );
 
-      displayMessage( "\nGot I/O streams\n" );
    }
 
    private void processConnection() throws IOException
    {
-      String message = "Connection successful";
+      String message = "Sucesso na conexão";
       sendData( message );
 
       setTextFieldEditable( true );
@@ -124,15 +124,15 @@ public class Servidor extends JFrame
          } 
          catch ( ClassNotFoundException classNotFoundException ) 
          {
-            displayMessage( "\nUnknown object type received" );
+            displayMessage( "\nTipo de objeto recebido é desconhecido" );
          } 
 
-      } while ( !message.equals( "CLIENT>>> TERMINATE" ) );
+      } while ( !message.equals( telaServidor.textField.getText() + ">>> TERMINATE" ) );
    } 
 
    private void closeConnection() 
    {
-      displayMessage( "\nTerminating connection\n" );
+      displayMessage( "\nTerminando conexão\n" );
       setTextFieldEditable( false );
 
       try 
@@ -151,13 +151,13 @@ public class Servidor extends JFrame
    {
       try 
       {
-         output.writeObject( "SERVER>>> " + message );
+         output.writeObject( telaServidor.textField.getText() + ">>> " + message );
          output.flush();
-         displayMessage( "\nSERVER>>> " + message );
+         displayMessage( "\n" + telaServidor.textField.getText() + ">>> " + message );
       } 
       catch ( IOException ioException ) 
       {
-         displayArea.append( "\nError writing object" );
+         displayArea.append( "\nErro na escrita do objeto" );
       } 
    }
 
