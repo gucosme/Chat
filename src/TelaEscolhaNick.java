@@ -20,6 +20,7 @@ public class TelaEscolhaNick extends JFrame {
 	private JTextField textField;
 	private JButton btnLogar;
 	private JButton btnCancelar;
+	public Nick n = new Nick();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,6 +57,9 @@ public class TelaEscolhaNick extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (textField.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Informe algum nick!", "ERRO", JOptionPane.ERROR_MESSAGE);
+				} else {					
+					n.setNickName(textField.getText());
+					dispose();
 				}
 			}
 		});

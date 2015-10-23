@@ -26,10 +26,11 @@ public class Servidor extends JFrame
    private ServerSocket server;
    private Socket connection;
    private int counter = 1;
+   private String s = new TelaEscolhaNick().n.getNickName(); 
 
    public Servidor()
    {
-      super( "Servidor" );
+      setTitle(s);
 
       enterField = new JTextField();
       enterField.setEditable( false );
@@ -52,6 +53,10 @@ public class Servidor extends JFrame
 
       setSize( 361, 424 );
       setVisible( true );
+   }
+   
+   public static String atribuirNick(Nick nick){
+	   return nick.getNickName();
    }
 
    public void runServer()
